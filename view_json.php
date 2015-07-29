@@ -7,7 +7,7 @@ class view_json extends ViewEngine
 {
     public function process()
     {
-        if (!empty($this->forward->lazyOutput)) {
+        if (!empty($this['forward']->lazyOutput)) {
             return;
         }
         $all = $this->get();
