@@ -3,6 +3,9 @@ PMVC\Load::plug();
 PMVC\setPlugInFolder('../');
 class ViewJsonTest extends PHPUnit_Framework_TestCase
 {
+   /**
+    * @runInSeparateProcess
+    */
     function testHelloJson()
     {
         $json = PMVC\plug('view_json');
