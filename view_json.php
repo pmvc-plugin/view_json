@@ -11,7 +11,6 @@ class view_json extends ViewEngine
             return;
         }
         $all = $this->get();
-        unset($all[_CLASS]);
         header('Content-type: application/json');
         echo json_encode($all);
     }
