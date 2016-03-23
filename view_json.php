@@ -5,13 +5,19 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\view_json';
 
 class view_json extends ViewEngine
 {
+    public function init()
+    {
+        $this['headers']=[
+            'Content-type: application/json'
+        ];
+    }
+    
     public function process()
     {
         if (!empty($this['forward']->action)) {
             return;
         }
         $all = $this->get();
-        header('Content-type: application/json');
         echo json_encode($all);
     }
 }
