@@ -19,5 +19,8 @@ class view_json extends ViewEngine
         }
         $all = $this->get();
         echo json_encode($all);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            trigger_error(json_last_error_msg());
+        }
     }
 }
