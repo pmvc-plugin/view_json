@@ -11,6 +11,11 @@ class view_json extends ViewEngine
             'Content-type: application/json'
         ];
     }
+
+    /**
+     * Set theme folder
+     */
+    public function setThemeFolder($val) { }
     
     public function process()
     {
