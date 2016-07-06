@@ -1,7 +1,11 @@
 <?php
 namespace PMVC\PlugIn\view;
 
+use PMVC\Event;
+
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\view_json';
+
+\PMVC\initPlugin(['controller'=>null]);
 
 class view_json extends ViewEngine
 {
@@ -16,16 +20,23 @@ class view_json extends ViewEngine
      * Set theme folder
      */
     public function setThemeFolder($val) { }
-    
-    public function process()
+
+    public function onFinish()
     {
-        if (!empty($this['forward']->action)) {
-            return;
-        }
         $all = $this->get();
         echo json_encode($all);
         if (json_last_error() !== JSON_ERROR_NONE) {
             trigger_error(json_last_error_msg());
         }
+    }
+    
+    public function process()
+    {
+        if (\PMVC\getOption(Event\FINISH)) {
+            return $this->onFinish();
+        }
+        // only need trigger when process
+        \PMVC\plug('dispatcher')
+            ->attach($this, Event\FINISH);
     }
 }
