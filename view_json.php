@@ -32,11 +32,14 @@ class view_json extends ViewEngine
     
     public function process()
     {
-        if (\PMVC\getOption(Event\FINISH)) {
+        if (\PMVC\getOption(Event\FINISH) ||
+            !\PMVC\exists('dispatcher','plugin')
+        ) {
             return $this->onFinish();
+        } else {
+            // only need trigger when process
+            \PMVC\plug('dispatcher')
+                ->attach($this, Event\FINISH);
         }
-        // only need trigger when process
-        \PMVC\plug('dispatcher')
-            ->attach($this, Event\FINISH);
     }
 }
