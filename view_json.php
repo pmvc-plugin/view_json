@@ -39,7 +39,7 @@ class view_json extends ViewEngine
         } else {
             // only need trigger when process
             \PMVC\plug('dispatcher')
-                ->attach($this, Event\FINISH);
+                ->attachAfter($this, Event\FINISH);
         }
     }
 }
