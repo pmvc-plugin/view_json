@@ -14,6 +14,23 @@ class view_json extends ViewEngine
         $this['headers']=[
             'Content-type: application/json'
         ];
+        \PMVC\callPlugin(
+            'dispatcher',
+            'attach',
+            [
+                $this,
+                \PMVC\Event\MAP_REQUEST
+            ]
+        );
+    }
+
+    public function onMapRequest()
+    {
+        $accept = \PMVC\plug('getenv')->get('HTTP_ACCEPT');
+        if ('application/json'===$accept) {
+            \PMVC\plug('controller')[_VIEW_ENGINE]='json';
+            \PMVC\unplug('view_config_helper');
+        }
     }
 
     /**
