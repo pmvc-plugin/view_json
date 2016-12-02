@@ -52,9 +52,10 @@ class view_json extends ViewEngine
         if (\PMVC\getOption(Event\FINISH) ||
             !\PMVC\exists('dispatcher','plugin')
         ) {
+            // run directly if miss event
             return $this->onFinish();
         } else {
-            // only need trigger when process
+            // only run by finish event 
             \PMVC\plug('dispatcher')
                 ->attachAfter($this, Event\FINISH);
         }
