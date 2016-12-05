@@ -16,7 +16,7 @@ class view_json extends ViewEngine
         ];
         \PMVC\callPlugin(
             'dispatcher',
-            'attach',
+            'attachBefore',
             [
                 $this,
                 \PMVC\Event\MAP_REQUEST
