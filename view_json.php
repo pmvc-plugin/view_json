@@ -5,8 +5,6 @@ use PMVC\Event;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\view_json';
 
-\PMVC\initPlugin(['controller'=>null]);
-
 class view_json extends ViewEngine
 {
     public function init()
@@ -19,7 +17,7 @@ class view_json extends ViewEngine
             'attach',
             [
                 $this,
-                \PMVC\Event\MAP_REQUEST
+                Event\MAP_REQUEST
             ]
         );
         \PMVC\callPlugin(
@@ -27,16 +25,18 @@ class view_json extends ViewEngine
             'attachBefore',
             [
                 $this,
-                \PMVC\Event\B4_PROCESS_VIEW
+                Event\B4_PROCESS_VIEW
             ]
         );
     }
 
     public function onMapRequest()
     {
-        $accept = \PMVC\plug('getenv')->get('HTTP_ACCEPT');
-        if ('application/json'===$accept) {
-            \PMVC\plug('controller')[_VIEW_ENGINE]='json';
+        if (\PMVC\exists('controller','plugin')) {
+            $accept = \PMVC\plug('getenv')->get('HTTP_ACCEPT');
+            if ('application/json'===$accept) {
+                \PMVC\plug('controller')[_VIEW_ENGINE]='json';
+            }
         }
     }
 

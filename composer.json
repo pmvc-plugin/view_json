@@ -12,8 +12,11 @@
         }
     ],
     "require": {
-        "pmvc-plugin/view": "*",
-        "pmvc-plugin/controller": "*"
+        "pmvc-plugin/view": "*"
+    },
+    "require-dev": {
+        "pmvc-plugin/controller": "*",
+        "pmvc-plugin/getenv": "*"
     },
     "minimum-stability": "dev"
 }

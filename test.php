@@ -17,4 +17,15 @@ class ViewJsonTest extends PHPUnit_Framework_TestCase
         $expected = '{"text":"hello world"}';
         $this->assertEquals($expected,trim($output));
     }
+
+    function testAutoChangeViewEngine()
+    {
+        $c=\PMVC\plug('controller');
+        \PMVC\plug('getenv', [
+            'HTTP_ACCEPT'=>'application/json'
+        ]);
+        $json = PMVC\plug('view_json');
+        $json->onMapRequest();
+        $this->assertEquals('json',$c[_VIEW_ENGINE]);
+    }
 }
