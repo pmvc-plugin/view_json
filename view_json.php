@@ -2,6 +2,7 @@
 namespace PMVC\PlugIn\view;
 
 use PMVC\Event;
+use UnexpectedValueException;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\view_json';
 
@@ -57,7 +58,7 @@ class view_json extends ViewEngine
         $all = $this->get();
         echo json_encode($all);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            trigger_error(json_last_error_msg());
+            throw new UnexpectedValueException(json_last_error_msg());
         }
     }
     
