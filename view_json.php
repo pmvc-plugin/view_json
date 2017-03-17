@@ -2,17 +2,21 @@
 namespace PMVC\PlugIn\view;
 
 use PMVC\Event;
+use PMVC\HashMap;
 use UnexpectedValueException;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\view_json';
 
 class view_json extends ViewEngine
 {
+    private $_jsonData;
+
     public function init()
     {
         $this['headers']=[
             'Content-type: application/json'
         ];
+        $this->_jsonData = new HashMap();
         \PMVC\callPlugin(
             'dispatcher',
             'attach',
@@ -55,8 +59,7 @@ class view_json extends ViewEngine
 
     public function onFinish()
     {
-        $all = $this->get();
-        echo json_encode($all);
+        echo json_encode(\PMVC\get($this->_jsonData));
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new UnexpectedValueException(json_last_error_msg());
         }
@@ -64,6 +67,8 @@ class view_json extends ViewEngine
     
     public function process()
     {
+        $this->_jsonData[[]] = $this->get();
+        $this->clean();
         if (\PMVC\getOption(Event\FINISH) ||
             !\PMVC\exists('dispatcher','plugin')
         ) {
