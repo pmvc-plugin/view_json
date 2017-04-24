@@ -19,7 +19,7 @@ class view_json extends ViewEngine
         $this->_jsonData = new HashMap();
         \PMVC\callPlugin(
             'dispatcher',
-            'attach',
+            'attachBefore',
             [
                 $this,
                 Event\MAP_REQUEST
