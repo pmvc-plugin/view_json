@@ -68,6 +68,10 @@ class view_json extends ViewEngine
     public function process()
     {
         $this->_jsonData[[]] = $this->get();
+        if (!isset($this['run']) && $this->get('themePath')) {
+            // should only keep one themePath
+            $this->_jsonData['themePath'] = $this->get('themePath');
+        }
         $this->clean();
         if (\PMVC\getOption(Event\FINISH) ||
             !\PMVC\exists('dispatcher','plugin')
