@@ -25,14 +25,6 @@ class view_json extends ViewEngine
                 Event\MAP_REQUEST
             ]
         );
-        \PMVC\callPlugin(
-            'dispatcher',
-            'attachBefore',
-            [
-                $this,
-                Event\B4_PROCESS_VIEW
-            ]
-        );
     }
 
     public function onMapRequest()
@@ -42,13 +34,6 @@ class view_json extends ViewEngine
             if ('application/json'===$accept) {
                 \PMVC\plug('controller')[_VIEW_ENGINE]='json';
             }
-        }
-    }
-
-    public function onB4ProcessView()
-    {
-        if (\PMVC\getOption(_VIEW_ENGINE)==='json') {
-            \PMVC\unplug('view_config_helper');
         }
     }
 
