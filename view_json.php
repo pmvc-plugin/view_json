@@ -44,6 +44,10 @@ class view_json extends ViewEngine
 
     public function onFinish()
     {
+        $lastGet = $this->get(); 
+        if ($lastGet) {
+          $this->_jsonData[[]] = $lastGet;
+        }
         echo json_encode(\PMVC\get($this->_jsonData));
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new UnexpectedValueException(json_last_error_msg());
