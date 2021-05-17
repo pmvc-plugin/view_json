@@ -14,13 +14,27 @@ class view_json extends ViewEngine
     {
         $this['headers'] = ['Content-type: application/json'];
         $this->_jsonData = new HashMap();
-        \PMVC\callPlugin('dispatcher', 'attachBefore', [
+        \PMVC\callPlugin('dispatcher', 'attach', [
             $this,
             Event\MAP_REQUEST,
         ]);
+        \PMVC\callPlugin('dispatcher', 'attach', [
+            $this,
+            Event\WILL_SET_VIEW,
+        ]);
+    }
+
+    public function onWillSetView()
+    {
+        $this->_resetAcceptJson();
     }
 
     public function onMapRequest()
+    {
+        $this->_resetAcceptJson();
+    }
+
+    private function _resetAcceptJson()
     {
         if (\PMVC\exists('controller', 'plugin')) {
             $accept = \PMVC\plug('getenv')->get('HTTP_ACCEPT');
